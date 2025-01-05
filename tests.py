@@ -12,6 +12,17 @@ app.config['WTF_CSRF_ENABLED'] = False
 
 
 class AddPetTestCase(TestCase):
+    def setUp(self):
+        """Set up test environment: create tables."""
+        with app.app_context():
+            db.create_all()
+
+    def tearDown(self):
+        """Clean up test environment: drop tables."""
+        with app.app_context():
+            db.session.remove()
+            db.drop_all()
+    
 
     def test_add_pet_form(self):
         with app.test_client() as client:
