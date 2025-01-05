@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>{{ pet.name }}</title>
+</head>
+<body>
+
+    <h1>{{ pet.name }}</h1>
+    <p>Species: {{ pet.species }}</p>
+
+    {% if pet.photo_url %}
+        <img src="{{ pet.photo_url }}" alt="Photo of {{ pet.name }}" style="max-width: 200px;">
+    {% else %}
+        <p>No photo available</p>
+    {% endif %}
+
+    {% if pet.age %}
+        <p>Age: {{ pet.age }}</p>
+    {% endif %}
+
+    <p>Notes: {{ pet.notes or "No notes available" }}</p>
+    <p>Status: {% if pet.available %}<strong>Available</strong>{% else %}Not Available{% endif %}</p>
+
+
+    <h2>Edit Pet</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form if field.widget.input_type != 'hidden' %}
+
+            <p>
+                {{field.label}}
+                {{field}}
+
+                {% for err in field.errors %}
+                <span style="color: red;">{{ err }}</span>
+                {% endfor %}
+            </p>
+
+        {% endfor %}
+        <button type="submit" class="btn btn-danger"> Make Changes</button>
+    </form>
+
+    <a href="/" class="btn btn-success" >Back to Homepage</a>
+
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div>
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} text-center">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+
+</body>
+</html>

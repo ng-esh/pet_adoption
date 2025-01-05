@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>Pet Adoption</title>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="text-center my-4">Pets for Adoption</h1>
+
+  <!-- Available Pets Section -->
+  <h2 class="text-center">Available Pets</h2>
+  <div class="row">
+    {% for pet in available_pets %}
+      <div class="col-md-4">
+        <div class="card mb-3">
+          {% if pet.photo_url %}
+            <img class="card-img-top" src="{{ pet.photo_url }}" alt="Photo of {{ pet.name }}" style="max-height: 200px;">
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title"><a href="/pets/{{ pet.id }}">{{ pet.name }}</a></h5>
+            <p class="card-text">Species: {{ pet.species }}</p>
+            {% if pet.age %}
+              <p class="card-text">Age: {{ pet.age }}</p>
+            {% endif %}
+            <p><strong>Available</strong></p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- No-Longer-Available Pets Section -->
+  <h2 class="text-center mt-5">No-Longer-Available Pets</h2>
+  <div class="row">
+    {% for pet in unavailable_pets %}
+      <div class="col-md-4">
+        <div class="card mb-3">
+          {% if pet.photo_url %}
+            <img class="card-img-top" src="{{ pet.photo_url }}" alt="Photo of {{ pet.name }}" style="max-height: 200px;">
+          {% endif %}
+          <div class="card-body text-center">
+            <h5 class="card-title"><a href="/pets/{{ pet.id }}">{{ pet.name }}</a></h5>
+            <p class="card-text">Species: {{ pet.species }}</p>
+            {% if pet.age %}
+              <p class="card-text">Age: {{ pet.age }}</p>
+            {% endif %}
+            <p>Not Available</p>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="/add" class="btn btn-success">Add New Pet</a>
+  </div>
+</div>
+
+</body>
+</html>
